@@ -8,6 +8,6 @@ import cz.blackchameleon.notes.framework.Note
 class OpenNoteRepository(
     private val source: OpenNoteSource
 ) {
-    suspend fun getOpenNote(): Note = source.getOpenNote()
+    suspend fun getOpenNote(): Note? = source.getOpenNote()
     suspend fun setOpenNote(note: Note) = source.setOpenNote(note)
 }

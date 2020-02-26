@@ -29,7 +29,11 @@ class NoteDetailViewModel(
 
     init {
         viewModelScope.launch {
-            _openNote.value = getOpenNote()
+            with(getOpenNote()) {
+                if (this != null) {
+                    _openNote.value = this
+                }
+            }
         }
     }
 

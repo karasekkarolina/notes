@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/margin_padding_normal"
             android:background="@null"
-            android:gravity="top|end"
+            android:gravity="top|start"
             android:hint="@string/text_hint"
             android:inputType="textMultiLine"
             android:scrollbars="vertical"
