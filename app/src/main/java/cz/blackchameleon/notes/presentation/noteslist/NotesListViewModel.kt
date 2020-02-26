@@ -81,7 +81,7 @@ class NotesListViewModel(
             withContext(Dispatchers.IO) {
                 with(getNotesList()) {
                     when (this) {
-                        is Result.Success -> { _notes.postValue(this.data) }
+                        is Result.Success<List<Note>> -> { _notes.postValue(this.data) }
                         else -> { }
                     }
                 }
