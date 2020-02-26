@@ -9,12 +9,14 @@ import cz.blackchameleon.notes.framework.NotesSourceImplementation
 import cz.blackchameleon.notes.framework.OpenNoteSourceImplementation
 import cz.blackchameleon.notes.presentation.notedetail.NoteDetailViewModel
 import cz.blackchameleon.notes.presentation.noteslist.NotesListViewModel
+import cz.blackchameleon.notes.usecases.*
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
+import kotlin.math.sin
 
 const val BASE_URL: String = "http://private-9aad-note10.apiary-mock.com/"
 
@@ -31,6 +33,15 @@ val koinModule = module {
 val viewModelModule = module {
     viewModel { NoteDetailViewModel(get(), get(), get()) }
     viewModel { NotesListViewModel(get(), get(), get(), get()) }
+}
+
+val useCasesModule = module {
+    single { CreateNote(get()) }
+    single { DeleteNote(get()) }
+    single { EditNote(get()) }
+    single { GetNotesList(get()) }
+    single { GetOpenNote(get()) }
+    single { SetOpenNote(get()) }
 }
 
 // Creates new Okhttp client for API calls
