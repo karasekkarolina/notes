@@ -1,7 +1,5 @@
 package cz.blackchameleon.notes.framework
 
-import cz.blackchameleon.notes.domain.Note
-import retrofit2.Response
 import retrofit2.http.*
 
 /**

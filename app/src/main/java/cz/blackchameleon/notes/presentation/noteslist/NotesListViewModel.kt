@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cz.blackchameleon.notes.domain.Note
+import cz.blackchameleon.notes.framework.Note
 import cz.blackchameleon.notes.usecases.CreateNote
 import cz.blackchameleon.notes.usecases.DeleteNote
 import cz.blackchameleon.notes.usecases.GetNotesList
@@ -26,8 +26,8 @@ class NotesListViewModel(
     private val _showRestoreDialog: MutableLiveData<Boolean> = MutableLiveData()
     val showRestoreDialog: LiveData<Boolean> = _showRestoreDialog
 
-    var deletedIndex: Int = -1
-    var deletedItem: Note = Note(id = deletedIndex)
+    private var deletedIndex: Int = -1
+    private var deletedItem: Note = Note(id = deletedIndex)
 
     init {
         loadNotes()

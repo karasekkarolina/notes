@@ -1,7 +1,7 @@
 package cz.blackchameleon.notes.usecases
 
 import cz.blackchameleon.notes.data.NotesRepository
-import cz.blackchameleon.notes.domain.Note
+import cz.blackchameleon.notes.framework.Note
 
 class CreateNote(
     private val notesRepository: NotesRepository

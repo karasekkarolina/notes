@@ -1,7 +1,6 @@
 package cz.blackchameleon.notes.framework
 
 import cz.blackchameleon.notes.data.NotesSource
-import cz.blackchameleon.notes.domain.Note
 
 class NotesSourceImplementation(
     private val notesRequestService: NotesRequestService

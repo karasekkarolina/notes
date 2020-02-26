@@ -3,26 +3,20 @@ package cz.blackchameleon.notes.presentation.notedetail
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import cz.blackchameleon.notes.R
+import cz.blackchameleon.notes.extensions.afterTextChanged
 import cz.blackchameleon.notes.extensions.closeSoftKeyboard
 import cz.blackchameleon.notes.presentation.base.BaseFragment
-import cz.blackchameleon.notes.usecases.CreateNote
-import cz.blackchameleon.notes.usecases.EditNote
-import cz.blackchameleon.notes.usecases.GetOpenNote
 import kotlinx.android.synthetic.main.fragment_note_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NoteDetailFragment(
-    private val getOpenNote: GetOpenNote,
-    private val editNote: EditNote,
-    private val createNote: CreateNote
-
-) : BaseFragment(R.layout.fragment_note_detail), MenuItem.OnMenuItemClickListener {
+class NoteDetailFragment : BaseFragment(R.layout.fragment_note_detail),
+    MenuItem.OnMenuItemClickListener {
     private val viewModel: NoteDetailViewModel by viewModel()
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -58,30 +52,26 @@ class NoteDetailFragment(
     }
 
     override fun setupObservers() {
-        viewModel.note.observe(this, Observer { note ->
-            note_text.setText(note?.title)
+        viewModel.openNote.observe(this, Observer { note ->
+            note_text.setText(note.title)
         })
 
         viewModel.closeNote.observe(this, Observer {
-            requireContext().closeSoftKeyboard(note_text)
-            it.getContentIfNotHandled()?.let {
-                NavHostFragment.findNavController(this).navigateUp()
-            }
+            context?.closeSoftKeyboard(note_text)
+            NavHostFragment.findNavController(this).navigateUp()
         })
         viewModel.loading.observe(this, Observer { visible ->
-            loading_overlay.visibility = if (visible == true) View.VISIBLE else View.GONE
+            loading_overlay.isVisible = visible
         })
 
         viewModel.showConfirmDialog.observe(this, Observer { event ->
-            event.getContentIfNotHandled()?.let { callback ->
-                context?.let { context ->
-                    AlertDialog.Builder(context, R.style.AlertDialog)
-                        .setTitle(R.string.note_lost)
-                        .setMessage(R.string.really_continue)
-                        .setPositiveButton(android.R.string.yes) { _, _ -> callback(true) }
-                        .setNegativeButton(android.R.string.no) { _, _ -> callback(false) }
-                        .show()
-                }
+            context?.let { context ->
+                AlertDialog.Builder(context, R.style.Widget_Notes_AlertDialog)
+                    .setTitle(R.string.note_lost)
+                    .setMessage(R.string.really_continue)
+                    .setPositiveButton(android.R.string.yes) { _, _ -> true }
+                    .setNegativeButton(android.R.string.no) { _, _ -> false }
+                    .show()
             }
         })
     }

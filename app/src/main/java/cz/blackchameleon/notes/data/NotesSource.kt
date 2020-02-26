@@ -1,6 +1,6 @@
 package cz.blackchameleon.notes.data
 
-import cz.blackchameleon.notes.domain.Note
+import cz.blackchameleon.notes.framework.Note
 
 interface NotesSource {
     suspend fun getNotes(): List<Note>

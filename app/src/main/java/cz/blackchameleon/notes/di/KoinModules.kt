@@ -2,8 +2,11 @@ package cz.blackchameleon.notes.di
 
 import cz.blackchameleon.notes.data.NotesRepository
 import cz.blackchameleon.notes.data.NotesSource
+import cz.blackchameleon.notes.data.OpenNoteRepository
+import cz.blackchameleon.notes.data.OpenNoteSource
 import cz.blackchameleon.notes.framework.NotesRequestService
 import cz.blackchameleon.notes.framework.NotesSourceImplementation
+import cz.blackchameleon.notes.framework.OpenNoteSourceImplementation
 import cz.blackchameleon.notes.presentation.notedetail.NoteDetailViewModel
 import cz.blackchameleon.notes.presentation.noteslist.NotesListViewModel
 import okhttp3.OkHttpClient
@@ -19,13 +22,15 @@ val koinModule = module {
     single { provideDefaultOkhttpClient() }
     single { provideRetrofit(get()) }
     single { NotesRepository(get()) }
+    single { OpenNoteRepository(get()) }
     single { provideRetrofitService<NotesRequestService>(get()) }
     single { NotesSourceImplementation(get()) as NotesSource }
+    single { OpenNoteSourceImplementation() as OpenNoteSource }
 }
 
 val viewModelModule = module {
-    viewModel { NoteDetailViewModel() }
-    viewModel { NotesListViewModel(get()) }
+    viewModel { NoteDetailViewModel(get(), get(), get()) }
+    viewModel { NotesListViewModel(get(), get(), get(), get()) }
 }
 
 // Creates new Okhttp client for API calls
