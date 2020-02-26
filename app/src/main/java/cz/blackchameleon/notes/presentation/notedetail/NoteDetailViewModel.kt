@@ -50,24 +50,27 @@ class NoteDetailViewModel(
         }
     }
 
-    fun onSaveClick() {
+    fun onSaveClick(string: String) {
         viewModelScope.launch {
-            if (_openNote.value == Note()) {
-                createNote(Note())
-            } else {
-                editNote(Note())
+            // todo
+            _openNote.value?.let {
+                if (it == Note()) {
+                    createNote(Note(title = string))
+                } else {
+                    editNote(Note(it.id, string))
+                }
             }
             closeDetail()
         }
     }
-
+/*
     fun onNoteChanged(text: String) {
         if (text != _openNote.value?.title) {
             noteChanged = true
         }
         _openNote.value?.title = text
     }
-
+*/
     private fun startLoading() {
         _loading.value = true
     }

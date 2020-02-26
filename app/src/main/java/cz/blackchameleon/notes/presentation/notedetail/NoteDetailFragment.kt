@@ -28,7 +28,7 @@ class NoteDetailFragment : BaseFragment(R.layout.fragment_note_detail),
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_save -> {
-                viewModel.onSaveClick()
+                viewModel.onSaveClick(note_text.text.toString())
                 return true
             }
         }
@@ -47,8 +47,6 @@ class NoteDetailFragment : BaseFragment(R.layout.fragment_note_detail),
 
     override fun setupListeners() {
         detail_toolbar.setNavigationOnClickListener { viewModel.onBackClick() }
-        note_text.afterTextChanged { text -> viewModel.onNoteChanged(text) }
-
     }
 
     override fun setupObservers() {
