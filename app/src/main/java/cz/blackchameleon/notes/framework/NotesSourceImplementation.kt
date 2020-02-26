@@ -5,7 +5,7 @@ import cz.blackchameleon.notes.data.NotesSource
 class NotesSourceImplementation(
     private val notesRequestService: NotesRequestService
 ) : NotesSource {
-    override suspend fun getNotes(): List<Note> = notesRequestService.getNotes()
+    override suspend fun getNotes(): Result<List<Note>> = withErrorHandling { notesRequestService.getNotes() }
 
     override suspend fun getNote(id: Int): Note = notesRequestService.getNote(id)
 
