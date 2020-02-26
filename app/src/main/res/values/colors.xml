@@ -9,9 +9,5 @@
     <color name="text_tertiary">#999FA5</color>
 
     <color name="background_primary">#FFF</color>
-    <color name="background_secondary">#F6F7F8</color>
-    <color name="background_tertiary">#F0F1F3</color>
-
-    <color name="background_placeholder">#999FA5</color>
     <color name="overlay">#C9CBDD</color>
 </resources>

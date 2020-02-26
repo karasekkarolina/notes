@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cz.blackchameleon.notes.framework.Note
+import cz.blackchameleon.notes.framework.model.Note
 import cz.blackchameleon.notes.usecases.CreateNote
 import cz.blackchameleon.notes.usecases.EditNote
 import cz.blackchameleon.notes.usecases.GetOpenNote

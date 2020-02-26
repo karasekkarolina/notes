@@ -1,4 +1,4 @@
-package cz.blackchameleon.notes.framework
+package cz.blackchameleon.notes.framework.model
 
 /**
  * Inner model class for note representation

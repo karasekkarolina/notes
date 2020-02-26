@@ -1,7 +1,7 @@
 package cz.blackchameleon.notes.data
 
-import cz.blackchameleon.notes.framework.Note
-import cz.blackchameleon.notes.framework.Result
+import cz.blackchameleon.notes.framework.model.Note
+import cz.blackchameleon.notes.framework.model.Result
 
 interface NotesSource {
     suspend fun getNotes(): Result<List<Note>>

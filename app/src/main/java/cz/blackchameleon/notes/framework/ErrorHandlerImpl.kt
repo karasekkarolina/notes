@@ -1,5 +1,6 @@
 package cz.blackchameleon.notes.framework
 
+import cz.blackchameleon.notes.framework.model.ErrorEntity
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.HttpURLConnection

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cz.blackchameleon.notes.R
-import cz.blackchameleon.notes.framework.Note
+import cz.blackchameleon.notes.framework.model.Note
 import kotlinx.android.synthetic.main.item_note.view.*
 
 class NotesAdapter(private val onClick: (Note) -> Unit) :

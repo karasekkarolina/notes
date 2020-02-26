@@ -1,4 +1,4 @@
-package cz.blackchameleon.notes.framework
+package cz.blackchameleon.notes.framework.model
 
 sealed class ErrorEntity {
     abstract val originalException: Throwable

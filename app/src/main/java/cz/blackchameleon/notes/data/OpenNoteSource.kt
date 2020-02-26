@@ -1,6 +1,6 @@
 package cz.blackchameleon.notes.data
 
-import cz.blackchameleon.notes.framework.Note
+import cz.blackchameleon.notes.framework.model.Note
 
 interface OpenNoteSource {
     suspend fun getOpenNote(): Note?

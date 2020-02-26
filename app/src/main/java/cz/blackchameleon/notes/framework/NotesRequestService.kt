@@ -1,5 +1,6 @@
 package cz.blackchameleon.notes.framework
 
+import cz.blackchameleon.notes.framework.model.Note
 import retrofit2.http.*
 
 /**
