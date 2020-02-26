@@ -1,11 +1,24 @@
 package cz.blackchameleon.notes
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Bundle
-import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import cz.blackchameleon.notes.presentation.base.OnBackPressedListener
 
+/**
+ * MainActivity
+ * Main activity in single activity architecture.
+ *
+ * @see AppCompatActivity
+ *
+ * @author Karolina Klepackova <klepackova.karolina@email.cz>
+ * @since ver 1.0
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navHost: NavHostFragment
@@ -14,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        // Gets the main navigation component
         navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
     }
 
@@ -26,5 +39,30 @@ class MainActivity : AppCompatActivity() {
             }
         }
         super.onBackPressed()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // Checks if internet connection is available and notifies user
+        (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).registerNetworkCallback(
+            NetworkRequest.Builder().build(),
+            object : ConnectivityManager.NetworkCallback() {
+
+                override fun onAvailable(network: Network) =
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.online_announcement),
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                override fun onLost(network: Network) =
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.offline_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+            }
+        )
     }
 }
