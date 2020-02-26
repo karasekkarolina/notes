@@ -57,22 +57,8 @@ class NoteDetailViewModel(
             } else {
                 editNote(Note())
             }
-            onBackClick()
+            closeDetail()
         }
-        /*note.value?.let { toSave ->
-
-            startLoading()
-            (note as MediatorLiveData).addSource(notesRepository.saveNote(toSave)) { savedNote ->
-                stopLoading()
-                if (savedNote == null) {
-                    showConnectionError()
-                } else {
-                    note.value = savedNote
-                    noteChanged = false
-                    closeDetail()
-                }
-            }
-        }*/
     }
 
     fun onNoteChanged(text: String) {
