@@ -5,17 +5,29 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cz.blackchameleon.notes.domain.Note
+import cz.blackchameleon.notes.usecases.CreateNote
+import cz.blackchameleon.notes.usecases.DeleteNote
 import cz.blackchameleon.notes.usecases.GetNotesList
+import cz.blackchameleon.notes.usecases.SetOpenNote
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class NotesListViewModel(
-    private val getNotesList: GetNotesList
+    private val getNotesList: GetNotesList,
+    private val openNote: SetOpenNote,
+    private val deleteNote: DeleteNote,
+    private val createNote: CreateNote
 ) : ViewModel() {
 
     private val _notes: MutableLiveData<List<Note>> = MutableLiveData()
     val notes: LiveData<List<Note>> = _notes
+
+    private val _showRestoreDialog: MutableLiveData<Boolean> = MutableLiveData()
+    val showRestoreDialog: LiveData<Boolean> = _showRestoreDialog
+
+    var deletedIndex: Int = -1
+    var deletedItem: Note = Note(id = deletedIndex)
 
     init {
         loadNotes()
@@ -25,8 +37,42 @@ class NotesListViewModel(
         loadNotes()
     }
 
-    fun onNoteClick(note: Note) {
+    fun onItemDeleted(position: Int) {
+        _notes.value?.let {
+            deletedItem = it[position]
+            deletedIndex = position
+            _notes.value = it.minus(deletedItem)
+            _showRestoreDialog.value = true
 
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    deleteNote(deletedItem)
+                }
+            }
+        }
+    }
+
+    fun onRestoreClick() {
+        _notes.value?.let {
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    createNote(deletedItem)
+                }
+            }
+
+            _notes.value = it.toMutableList().apply { add(deletedIndex, deletedItem) }
+            _showRestoreDialog.value = false
+            deletedItem = Note(id = -1)
+            deletedIndex = -1
+        }
+    }
+
+    fun onNoteClick(note: Note) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                openNote(note)
+            }
+        }
     }
 
     private fun loadNotes() {
