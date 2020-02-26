@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cz.blackchameleon.notes.framework.Note
+import cz.blackchameleon.notes.framework.Result
 import cz.blackchameleon.notes.usecases.CreateNote
 import cz.blackchameleon.notes.usecases.DeleteNote
 import cz.blackchameleon.notes.usecases.GetNotesList
@@ -78,7 +79,12 @@ class NotesListViewModel(
     private fun loadNotes() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _notes.postValue(getNotesList())
+                with(getNotesList()) {
+                    when (this) {
+                        is Result.Success -> { _notes.postValue(this.data) }
+                        else -> { }
+                    }
+                }
             }
         }
     }
