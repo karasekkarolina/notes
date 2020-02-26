@@ -31,7 +31,7 @@ val koinModule = module {
 
 val viewModelModule = module {
     viewModel { NoteDetailViewModel(get(), get(), get()) }
-    viewModel { NotesListViewModel(get(), get(), get(), get(), get()) }
+    viewModel { NotesListViewModel(get(), get(), get(), get()) }
 }
 
 val useCasesModule = module {

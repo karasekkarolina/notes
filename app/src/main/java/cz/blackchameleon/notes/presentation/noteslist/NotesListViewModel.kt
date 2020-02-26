@@ -16,7 +16,6 @@ import kotlinx.coroutines.withContext
 
 class NotesListViewModel(
     private val getNotesList: GetNotesList,
-    private val openNote: SetOpenNote,
     private val deleteNote: DeleteNote,
     private val createNote: CreateNote,
     private val setOpenNote: SetOpenNote
@@ -73,7 +72,7 @@ class NotesListViewModel(
     fun onNoteClick(note: Note) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                openNote(note)
+                setOpenNote(note)
             }
         }
     }

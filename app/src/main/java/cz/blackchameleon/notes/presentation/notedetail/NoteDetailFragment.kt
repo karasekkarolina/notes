@@ -9,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import cz.blackchameleon.notes.R
-import cz.blackchameleon.notes.extensions.afterTextChanged
 import cz.blackchameleon.notes.extensions.closeSoftKeyboard
 import cz.blackchameleon.notes.presentation.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_note_detail.*

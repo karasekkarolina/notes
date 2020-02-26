@@ -8,6 +8,15 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
+/**
+ * App
+ * Application class that init dependency injection
+ *
+ * @see Application
+ *
+ * @author Karolina Klepackova <klepackova.karolina@email.cz>
+ * @since ver 1.0
+ */
 class App : Application() {
 
     override fun onCreate() {
