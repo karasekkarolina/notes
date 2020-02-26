@@ -1,6 +1,9 @@
 package cz.blackchameleon.notes.presentation.notedetail
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cz.blackchameleon.notes.framework.Note
 import cz.blackchameleon.notes.usecases.CreateNote
 import cz.blackchameleon.notes.usecases.EditNote
@@ -28,12 +31,10 @@ class NoteDetailViewModel(
     private var noteChanged: Boolean = false
 
     init {
+        startLoading()
         viewModelScope.launch {
-            with(getOpenNote()) {
-                if (this != null) {
-                    _openNote.value = this
-                }
-            }
+            _openNote.value = getOpenNote() ?: Note()
+            stopLoading()
         }
     }
 
@@ -51,7 +52,12 @@ class NoteDetailViewModel(
 
     fun onSaveClick() {
         viewModelScope.launch {
-
+            if (_openNote.value == Note()) {
+                createNote(Note())
+            } else {
+                editNote(Note())
+            }
+            onBackClick()
         }
         /*note.value?.let { toSave ->
 
