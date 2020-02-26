@@ -11,7 +11,3 @@ fun Context.closeSoftKeyboard(view: View) {
         this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
-
-fun Context.showDialog(int: Int) {
-    Toast.makeText(this, int, Toast.LENGTH_SHORT).show()
-}

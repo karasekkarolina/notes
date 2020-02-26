@@ -16,7 +16,6 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
-import kotlin.math.sin
 
 const val BASE_URL: String = "http://private-9aad-note10.apiary-mock.com/"
 
