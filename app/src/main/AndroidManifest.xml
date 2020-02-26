@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="cz.blackchameleon.notes">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name="cz.blackchameleon.notes.App"
         android:allowBackup="true"
