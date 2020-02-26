@@ -69,8 +69,8 @@ class NoteDetailFragment : BaseFragment(R.layout.fragment_note_detail),
                 AlertDialog.Builder(context, R.style.Widget_Notes_AlertDialog)
                     .setTitle(R.string.note_lost)
                     .setMessage(R.string.really_continue)
-                    .setPositiveButton(android.R.string.yes) { _, _ -> true }
-                    .setNegativeButton(android.R.string.no) { _, _ -> false }
+                    .setPositiveButton(android.R.string.yes) { _, _ -> event(true) }
+                    .setNegativeButton(android.R.string.no) { _, _ -> event(false) }
                     .show()
             }
         })

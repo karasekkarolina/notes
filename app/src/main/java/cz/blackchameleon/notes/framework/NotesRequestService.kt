@@ -9,7 +9,7 @@ interface NotesRequestService {
 
     // Returns notes list
     @GET("notes")
-    suspend fun getNotes(): List<Note>
+    suspend fun getNotes(): Result<List<Note>>
 
     // Returns requested note with given id
     @GET("notes/{id}")
