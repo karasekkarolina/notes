@@ -14,6 +14,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * View model that provides information what to display in view represented by [NotesListFragment]
+ *
+ * @see ViewModel
+ *
+ * @param getNotesList
+ * @param deleteNote
+ * @param createNote
+ * @param setOpenNote
+ *
+ * @author Karolina Klepackova <klepackova.karolina@email.cz>
+ * @since ver 1.0
+ */
 class NotesListViewModel(
     private val getNotesList: GetNotesList,
     private val deleteNote: DeleteNote,
@@ -28,8 +41,7 @@ class NotesListViewModel(
     val showRestoreDialog: LiveData<Boolean> = _showRestoreDialog
 
     private var deletedIndex: Int = -1
-    private var deletedItem: Note =
-        Note(id = deletedIndex)
+    private var deletedItem: Note = Note(id = deletedIndex)
 
     init {
         loadNotes()
@@ -39,6 +51,11 @@ class NotesListViewModel(
         loadNotes()
     }
 
+    /**
+     * Deletes note on given position and stores info necessary for its recovery
+     *
+     * @param position Specifies which item was deleted
+     */
     fun onItemDeleted(position: Int) {
         _notes.value?.let {
             deletedItem = it[position]
@@ -54,6 +71,9 @@ class NotesListViewModel(
         }
     }
 
+    /**
+     * Recovers previously deleted note
+     */
     fun onRestoreClick() {
         _notes.value?.let {
             viewModelScope.launch {
@@ -69,6 +89,11 @@ class NotesListViewModel(
         }
     }
 
+    /**
+     * Stores currently opened note into locally stored variable
+     *
+     * @param note
+     */
     fun onNoteClick(note: Note) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -77,7 +102,10 @@ class NotesListViewModel(
         }
     }
 
-    fun onAddClick() {
+    /**
+     * Sets default value into locally stored opened note variable
+     */
+    fun wipeOpenNote() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 setOpenNote(Note())
@@ -85,13 +113,19 @@ class NotesListViewModel(
         }
     }
 
+    /**
+     * Loads list of notes whose are shown in UI
+     */
     private fun loadNotes() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 with(getNotesList()) {
                     when (this) {
-                        is Result.Success<List<Note>> -> { _notes.postValue(this.data) }
-                        else -> { }
+                        is Result.Success<List<Note>> -> {
+                            _notes.postValue(this.data)
+                        }
+                        else -> {
+                        }
                     }
                 }
             }

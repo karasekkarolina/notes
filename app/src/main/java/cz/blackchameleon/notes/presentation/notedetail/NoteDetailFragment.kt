@@ -14,8 +14,18 @@ import cz.blackchameleon.notes.presentation.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_note_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+/**
+ * Fragment that handles UI for note detail
+ *
+ * @see BaseFragment
+ * @see MenuItem.setOnMenuItemClickListener
+ *
+ * @author Karolina Klepackova <klepackova.karolina@email.cz>
+ * @since ver 1.0
+ */
 class NoteDetailFragment : BaseFragment(R.layout.fragment_note_detail),
     MenuItem.OnMenuItemClickListener {
+
     private val viewModel: NoteDetailViewModel by viewModel()
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -35,7 +45,7 @@ class NoteDetailFragment : BaseFragment(R.layout.fragment_note_detail),
     }
 
     override fun onBackPressed(): Boolean {
-        viewModel.onBackClick()
+        viewModel.onBackClick(note_text.text.toString())
         return true
     }
 
@@ -45,7 +55,9 @@ class NoteDetailFragment : BaseFragment(R.layout.fragment_note_detail),
     }
 
     override fun setupListeners() {
-        detail_toolbar.setNavigationOnClickListener { viewModel.onBackClick() }
+        detail_toolbar.setNavigationOnClickListener {
+            viewModel.onBackClick(note_text.text.toString())
+        }
     }
 
     override fun setupObservers() {
@@ -53,17 +65,19 @@ class NoteDetailFragment : BaseFragment(R.layout.fragment_note_detail),
             note_text.setText(note.title)
         })
 
-        viewModel.closeNote.observe(this, Observer {close ->
+        viewModel.closeNote.observe(this, Observer { close ->
             if (close) {
                 context?.closeSoftKeyboard(note_text)
                 NavHostFragment.findNavController(this).navigateUp()
             }
         })
+
         viewModel.loading.observe(this, Observer { visible ->
             loading_overlay.isVisible = visible
         })
 
-        viewModel.showConfirmDialog.observe(this, Observer { event ->
+        // Shows confirmation dialog if the current text is different than the one stored in displayed note
+        viewModel.showWarningDialog.observe(this, Observer { event ->
             context?.let { context ->
                 AlertDialog.Builder(context, R.style.Widget_Notes_AlertDialog)
                     .setTitle(R.string.note_lost)

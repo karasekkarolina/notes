@@ -13,7 +13,16 @@ import cz.blackchameleon.notes.presentation.base.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.fragment_notes_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+/**
+ * Fragment that handles UI for notes list
+ *
+ * @see BaseFragment
+ *
+ * @author Karolina Klepackova <klepackova.karolina@email.cz>
+ * @since ver 1.0
+ */
 class NotesListFragment : BaseFragment(R.layout.fragment_notes_list) {
+
     private val viewModel: NotesListViewModel by viewModel()
 
     private val notesAdapter: NotesAdapter by lazy {
@@ -35,7 +44,7 @@ class NotesListFragment : BaseFragment(R.layout.fragment_notes_list) {
         )
         notes_list.isNestedScrollingEnabled = true
 
-
+        // Handler is used for possibility to restore currently deleted note
         val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 if (viewHolder is NoteViewHolder) {
@@ -44,6 +53,7 @@ class NotesListFragment : BaseFragment(R.layout.fragment_notes_list) {
             }
         }
 
+        // Helper which provides possibility to make swipe to dismiss RecyclerView's items
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(notes_list)
     }
@@ -58,11 +68,8 @@ class NotesListFragment : BaseFragment(R.layout.fragment_notes_list) {
 
         viewModel.showRestoreDialog.observe(this, Observer {
             if (it) {
-                val snackbar =
-                    Snackbar.make(notes_list, R.string.note_delete, Snackbar.LENGTH_SHORT)
-                snackbar.setAction(R.string.undo_selection) {
-                    viewModel.onRestoreClick()
-                }
+                val snackbar = Snackbar.make(notes_list, R.string.note_delete, Snackbar.LENGTH_SHORT)
+                snackbar.setAction(R.string.undo_selection) { viewModel.onRestoreClick() }
                 snackbar.setActionTextColor(resources.getColor(R.color.color_primary))
                 snackbar.show()
             }
@@ -73,7 +80,7 @@ class NotesListFragment : BaseFragment(R.layout.fragment_notes_list) {
         swipe_refresh.setOnRefreshListener(viewModel::onRefresh)
 
         add_button.setOnClickListener {
-            viewModel.onAddClick()
+            viewModel.wipeOpenNote()
             findNavController().navigate(NotesListFragmentDirections.actionNoteDetail())
         }
     }

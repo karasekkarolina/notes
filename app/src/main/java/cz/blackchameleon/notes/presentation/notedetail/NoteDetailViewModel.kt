@@ -10,6 +10,18 @@ import cz.blackchameleon.notes.usecases.EditNote
 import cz.blackchameleon.notes.usecases.GetOpenNote
 import kotlinx.coroutines.launch
 
+/**
+ * View model that provides information what to display in view represented by [NoteDetailFragment]
+ *
+ * @see ViewModel
+ *
+ * @param getOpenNote
+ * @param editNote
+ * @param createNote
+ *
+ * @author Karolina Klepackova <klepackova.karolina@email.cz>
+ * @since ver 1.0
+ */
 class NoteDetailViewModel(
     private val getOpenNote: GetOpenNote,
     private val editNote: EditNote,
@@ -25,24 +37,25 @@ class NoteDetailViewModel(
     private val _closeNote: MutableLiveData<Boolean> = MutableLiveData()
     val closeNote: LiveData<Boolean> = _closeNote
 
-    private val _showConfirmDialog: MutableLiveData<(Boolean) -> Unit> = MutableLiveData()
-    val showConfirmDialog: LiveData<(Boolean) -> Unit> = _showConfirmDialog
-
-    private var noteChanged: Boolean = false
+    private val _showWarningDialog: MutableLiveData<(Boolean) -> Unit> = MutableLiveData()
+    val showWarningDialog: LiveData<(Boolean) -> Unit> = _showWarningDialog
 
     init {
         startLoading()
         viewModelScope.launch {
+            // Loads open note from locally stored variable
             _openNote.value = getOpenNote() ?: Note()
             stopLoading()
         }
     }
 
-    fun onBackClick() {
-        if (!noteChanged) {
+    // Checks if current note text is different from the stored one
+    fun onBackClick(currentText: String) {
+        if (currentText == _openNote.value?.title) {
             closeDetail()
         } else {
-            showConfirmationDialog { confirmed ->
+            // Provides the response which user selected in the dialog
+            provideDialogAnswer { confirmed ->
                 if (confirmed) {
                     closeDetail()
                 }
@@ -50,9 +63,9 @@ class NoteDetailViewModel(
         }
     }
 
+    // Saves note depending on if it was a new note or edited one
     fun onSaveClick(string: String) {
         viewModelScope.launch {
-            // todo
             _openNote.value?.let {
                 if (it == Note()) {
                     createNote(Note(title = string))
@@ -63,14 +76,7 @@ class NoteDetailViewModel(
             closeDetail()
         }
     }
-/*
-    fun onNoteChanged(text: String) {
-        if (text != _openNote.value?.title) {
-            noteChanged = true
-        }
-        _openNote.value?.title = text
-    }
-*/
+
     private fun startLoading() {
         _loading.value = true
     }
@@ -83,7 +89,8 @@ class NoteDetailViewModel(
         _closeNote.value = true
     }
 
-    private fun showConfirmationDialog(callback: (Boolean) -> Unit) {
-        _showConfirmDialog.value = callback
+    // Returns answer given in the dialog via callback
+    private fun provideDialogAnswer(callback: (Boolean) -> Unit) {
+        _showWarningDialog.value = callback
     }
 }
