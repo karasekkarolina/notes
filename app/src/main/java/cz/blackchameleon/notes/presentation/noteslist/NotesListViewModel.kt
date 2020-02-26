@@ -18,7 +18,8 @@ class NotesListViewModel(
     private val getNotesList: GetNotesList,
     private val openNote: SetOpenNote,
     private val deleteNote: DeleteNote,
-    private val createNote: CreateNote
+    private val createNote: CreateNote,
+    private val setOpenNote: SetOpenNote
 ) : ViewModel() {
 
     private val _notes: MutableLiveData<List<Note>> = MutableLiveData()
@@ -72,6 +73,14 @@ class NotesListViewModel(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 openNote(note)
+            }
+        }
+    }
+
+    fun onAddClick() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                setOpenNote(Note())
             }
         }
     }

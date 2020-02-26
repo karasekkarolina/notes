@@ -73,6 +73,7 @@ class NotesListFragment : BaseFragment(R.layout.fragment_notes_list) {
         swipe_refresh.setOnRefreshListener(viewModel::onRefresh)
 
         add_button.setOnClickListener {
+            viewModel.onAddClick()
             findNavController().navigate(NotesListFragmentDirections.actionNoteDetail())
         }
     }
