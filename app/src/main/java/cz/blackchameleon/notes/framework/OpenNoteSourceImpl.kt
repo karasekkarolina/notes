@@ -3,7 +3,8 @@ package cz.blackchameleon.notes.framework
 import cz.blackchameleon.notes.data.OpenNoteSource
 import cz.blackchameleon.notes.framework.model.Note
 
-class OpenNoteSourceImplementation : OpenNoteSource {
+class OpenNoteSourceImpl : OpenNoteSource {
+    // Locally stored value referring to currently opened note
     private var openNote: Note? = null
 
     override suspend fun getOpenNote(): Note? = openNote

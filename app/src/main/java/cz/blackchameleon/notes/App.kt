@@ -26,6 +26,7 @@ class App : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
+        // Dependency injection made by insert-koin.io (see https://insert-koin.io)
         startKoin {
             androidContext(this@App)
             modules(

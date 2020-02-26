@@ -5,7 +5,7 @@ import cz.blackchameleon.notes.framework.model.Note
 import cz.blackchameleon.notes.framework.model.Result
 import cz.blackchameleon.notes.framework.model.withErrorHandling
 
-class NotesSourceImplementation(
+class NotesSourceImpl(
     private val notesRequestService: NotesRequestService
 ) : NotesSource {
     override suspend fun getNotes(): Result<List<Note>> =

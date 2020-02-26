@@ -5,8 +5,8 @@ import cz.blackchameleon.notes.data.NotesSource
 import cz.blackchameleon.notes.data.OpenNoteRepository
 import cz.blackchameleon.notes.data.OpenNoteSource
 import cz.blackchameleon.notes.framework.NotesRequestService
-import cz.blackchameleon.notes.framework.NotesSourceImplementation
-import cz.blackchameleon.notes.framework.OpenNoteSourceImplementation
+import cz.blackchameleon.notes.framework.NotesSourceImpl
+import cz.blackchameleon.notes.framework.OpenNoteSourceImpl
 import cz.blackchameleon.notes.presentation.notedetail.NoteDetailViewModel
 import cz.blackchameleon.notes.presentation.noteslist.NotesListViewModel
 import cz.blackchameleon.notes.usecases.*
@@ -25,8 +25,8 @@ val koinModule = module {
     single { NotesRepository(get()) }
     single { OpenNoteRepository(get()) }
     single { provideRetrofitService<NotesRequestService>(get()) }
-    single { NotesSourceImplementation(get()) as NotesSource }
-    single { OpenNoteSourceImplementation() as OpenNoteSource }
+    single { NotesSourceImpl(get()) as NotesSource }
+    single { OpenNoteSourceImpl() as OpenNoteSource }
 }
 
 val viewModelModule = module {
