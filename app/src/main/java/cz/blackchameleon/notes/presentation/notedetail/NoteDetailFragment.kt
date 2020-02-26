@@ -56,9 +56,11 @@ class NoteDetailFragment : BaseFragment(R.layout.fragment_note_detail),
             note_text.setText(note.title)
         })
 
-        viewModel.closeNote.observe(this, Observer {
-            context?.closeSoftKeyboard(note_text)
-            NavHostFragment.findNavController(this).navigateUp()
+        viewModel.closeNote.observe(this, Observer {close ->
+            if (close) {
+                context?.closeSoftKeyboard(note_text)
+                NavHostFragment.findNavController(this).navigateUp()
+            }
         })
         viewModel.loading.observe(this, Observer { visible ->
             loading_overlay.isVisible = visible
