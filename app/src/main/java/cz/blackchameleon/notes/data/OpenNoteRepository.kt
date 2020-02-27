@@ -3,7 +3,12 @@ package cz.blackchameleon.notes.data
 import cz.blackchameleon.notes.framework.model.Note
 
 /**
- * Receives notes from framework
+ * Uses [OpenNoteSource] implementation for providing request responses
+ *
+ * @param source
+ *
+ * @author Karolina Klepackova <klepackova.karolina@email.cz>
+ * @since ver 1.0
  */
 class OpenNoteRepository(
     private val source: OpenNoteSource

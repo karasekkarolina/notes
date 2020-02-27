@@ -5,6 +5,9 @@ import retrofit2.http.*
 
 /**
  * Interface for API calls connected with notes
+ *
+ * @author Karolina Klepackova <klepackova.karolina@email.cz>
+ * @since ver 1.0
  */
 interface NotesRequestService {
 

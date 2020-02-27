@@ -17,14 +17,19 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
+// Main API url used for requests
 const val BASE_URL: String = "http://private-9aad-note10.apiary-mock.com/"
 
+// Logically separated koin modules
 val koinModule = module {
     single { provideDefaultOkhttpClient() }
     single { provideRetrofit(get()) }
+
     single { NotesRepository(get()) }
     single { OpenNoteRepository(get()) }
+
     single { provideRetrofitService<NotesRequestService>(get()) }
+
     single { NotesSourceImpl(get()) as NotesSource }
     single { OpenNoteSourceImpl() as OpenNoteSource }
 }
@@ -59,6 +64,6 @@ private fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create())
     .build()
 
-// Extension function for retrofit
+// Extension function for creating retrofit service
 private inline fun <reified T> provideRetrofitService(retrofit: Retrofit): T =
     retrofit.create(T::class.java)

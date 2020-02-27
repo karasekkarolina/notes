@@ -5,6 +5,14 @@ import cz.blackchameleon.notes.framework.model.Note
 import cz.blackchameleon.notes.framework.model.Result
 import cz.blackchameleon.notes.framework.model.withErrorHandling
 
+/**
+ * Implementation of [NotesSource] specifying how to provide data
+ *
+ * @see NotesSource
+ *
+ * @author Karolina Klepackova <klepackova.karolina@email.cz>
+ * @since ver 1.0
+ */
 class NotesSourceImpl(
     private val notesRequestService: NotesRequestService
 ) : NotesSource {

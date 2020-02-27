@@ -4,6 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 
+/**
+ * Base class for fragments in app
+ * Provides logically separated UI setting functions
+ *
+ * @see Fragment
+ * @see OnBackPressedListener
+ *
+ * @author Karolina Klepackova <klepackova.karolina@email.cz>
+ * @since ver 1.0
+ */
 abstract class BaseFragment(layout: Int) : Fragment(layout), OnBackPressedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
