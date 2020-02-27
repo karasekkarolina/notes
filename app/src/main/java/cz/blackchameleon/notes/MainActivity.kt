@@ -52,13 +52,6 @@ class MainActivity : AppCompatActivity() {
             NetworkRequest.Builder().build(),
             object : ConnectivityManager.NetworkCallback() {
 
-                override fun onAvailable(network: Network) =
-                    Toast.makeText(
-                        applicationContext,
-                        getString(R.string.online_announcement),
-                        Toast.LENGTH_LONG
-                    ).show()
-
                 override fun onLost(network: Network) =
                     Toast.makeText(
                         applicationContext,

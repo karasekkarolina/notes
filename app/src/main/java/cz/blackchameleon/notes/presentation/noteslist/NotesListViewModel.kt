@@ -108,7 +108,7 @@ class NotesListViewModel(
     fun wipeOpenNote() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                setOpenNote(Note())
+                setOpenNote(null)
             }
         }
     }

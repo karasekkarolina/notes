@@ -2,7 +2,6 @@
     <!-- General -->
     <string name="app_name" translatable="false">Notes</string>
     <string name="offline_error">It seems you\'re offline. Please check your internet connection.</string>
-    <string name="online_announcement">You\'re online again!</string>
 
     <!-- Notes list -->
     <string name="note_delete">Note was deleted!</string>

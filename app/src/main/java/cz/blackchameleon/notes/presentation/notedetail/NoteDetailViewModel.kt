@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cz.blackchameleon.notes.framework.model.Note
-import cz.blackchameleon.notes.usecases.CreateNote
-import cz.blackchameleon.notes.usecases.EditNote
-import cz.blackchameleon.notes.usecases.GetOpenNote
+import cz.blackchameleon.notes.usecases.*
 import kotlinx.coroutines.launch
 
 /**
@@ -24,8 +22,11 @@ import kotlinx.coroutines.launch
  */
 class NoteDetailViewModel(
     private val getOpenNote: GetOpenNote,
+    private val setOpenNote: SetOpenNote,
     private val editNote: EditNote,
-    private val createNote: CreateNote
+    private val createNote: CreateNote,
+    private val getDraftNote: GetDraftNote,
+    private val setDraftNote: SetDraftNote
 ) : ViewModel() {
 
     private val _openNote: MutableLiveData<Note> = MutableLiveData()
@@ -44,7 +45,7 @@ class NoteDetailViewModel(
         startLoading()
         viewModelScope.launch {
             // Loads open note from locally stored variable
-            _openNote.value = getOpenNote() ?: Note()
+            _openNote.value = getDraftNote() ?: getOpenNote() ?: Note()
             stopLoading()
         }
     }
@@ -69,11 +70,27 @@ class NoteDetailViewModel(
             _openNote.value?.let {
                 if (it == Note()) {
                     createNote(Note(title = string))
+                    setOpenNote(Note(title = string))
                 } else {
                     editNote(Note(it.id, string))
+                    setOpenNote(Note(it.id, string))
                 }
+                setDraftNote(null)
             }
             closeDetail()
+        }
+    }
+
+    // Saves draft note when app goes to background
+    fun saveDraft(text: String) {
+        viewModelScope.launch {
+            _openNote.value?.id?.let { id ->
+                val note = Note(id, text)
+                if (getOpenNote() != note) {
+                    setDraftNote(note)
+                }
+                _openNote.value = note
+            }
         }
     }
 

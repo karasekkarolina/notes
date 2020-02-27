@@ -28,6 +28,11 @@ class NoteDetailFragment : BaseFragment(R.layout.fragment_note_detail),
 
     private val viewModel: NoteDetailViewModel by viewModel()
 
+    override fun onPause() {
+        viewModel.saveDraft(note_text.text.toString())
+        super.onPause()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.note_detail_menu, menu)
