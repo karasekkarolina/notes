@@ -25,6 +25,9 @@
 
 ## Architecture
 App is developed as a single activity with two fragments and is written in Kotlin language.
+
 It uses Android [Navigation Component](https://developer.android.com/guide/navigation) for navigating between screens.
+
 Async work - such as API calls handled by Retrofit - are done via Kotlin coroutines.
+
 UI states are held in View Models and propagated via Live data values.
