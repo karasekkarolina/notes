@@ -1,7 +1,6 @@
 package cz.blackchameleon.notes.usecases
 
 import cz.blackchameleon.notes.data.DraftNoteRepository
-import cz.blackchameleon.notes.data.OpenNoteRepository
 import cz.blackchameleon.notes.framework.model.Note
 
 /**
